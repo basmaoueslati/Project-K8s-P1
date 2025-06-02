@@ -1,0 +1,32 @@
+---
+- name: Deploy Docker container to server
+  hosts: dockerC
+  become: true
+  vars:
+    image_name: "basmaoueslati/compare-appf25"
+    #image_tag: "v1"
+    container_name: "compare-app"
+    app_port: 8080
+
+  tasks:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ image_name }}"
+        #tag: "{{ image_tag }}"
+        source: pull
+
+    - name: Stop and remove existing container if any
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: true
+
+    - name: Run the container
+      docker_container:
+        name: "{{ container_name }}"
+        #image: "{{ image_name }}:{{ image_tag }}"
+        image: "{{ image_name }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ app_port }}:8080"
