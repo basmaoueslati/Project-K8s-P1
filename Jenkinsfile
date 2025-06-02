@@ -24,7 +24,7 @@ pipeline {
         //Continuous Deployment
        stage('Run Ansible Playbook') {
             steps {            
-                sh 'ansible-playbook -i inventory.ini playbook.yml -e ansible_python_interpreter=/usr/bin/python3'
+                sh 'ansible-playbook -i inventory.ini playbook.yml'
             
         }
     }
