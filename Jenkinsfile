@@ -21,6 +21,18 @@ pipeline {
                 }
             }
         }
+        stage('Clean Old Docker Images on Local') {
+            steps {
+                echo '___Cleaning up unused Docker images___'
+                sh 'docker image prune -f'
+
+                sh '''
+                docker images --filter=reference='basmaoueslati/compare-appf25*' --format '{{.ID}} {{.Repository}}:{{.Tag}}' \
+                  | awk '{print $1}' \
+                  | xargs -r docker rmi -f
+                '''
+            }
+        }
         //Continuous Deployment
        stage('Run Ansible Playbook') {
             steps {            
