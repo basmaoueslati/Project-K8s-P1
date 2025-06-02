@@ -1,7 +1,7 @@
 - name: Deploy compare-app on Kubernetes
   hosts: localhost
   vars:
-  ansible_python_interpreter: "{{ ansible_env.HOME }}/ansible-env/bin/python"
+    ansible_python_interpreter: "{{ ansible_env.HOME }}/ansible-env/bin/python"
   collections:
     - community.kubernetes
   tasks:
