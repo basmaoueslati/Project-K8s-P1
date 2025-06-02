@@ -22,13 +22,12 @@ pipeline {
             }
         }
         //Continuous Deployment
-        stage('Deploy') {
-            steps {
-                withKubeConfig(credentialsId: 'kubernetes') {
-                    sh "kubectl apply -f compare-app.yaml"
-                }
-            }  
+       stage('Run Ansible Playbook') {
+            steps {            
+                sh 'ansible-playbook -i inventory.ini playbook.yml'
+            
         }
+    }
 
     }
 }
