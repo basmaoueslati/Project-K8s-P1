@@ -1,32 +1,10 @@
----
-- name: Deploy Docker container to server
-  hosts: MasterKube
-  become: true
-  vars:
-    image_name: "basmaoueslati/compare-appf25"
-    #image_tag: "v1"
-    container_name: "compare-app"
-    app_port: 8080
-
+- name: Deploy compare-app on Kubernetes
+  hosts: localhost
+  collections:
+    - community.kubernetes
   tasks:
-    - name: Pull Docker image
-      docker_image:
-        name: "{{ image_name }}"
-        #tag: "{{ image_tag }}"
-        source: pull
-
-    - name: Stop and remove existing container if any
-      docker_container:
-        name: "{{ container_name }}"
-        state: absent
-        force_kill: true
-
-    - name: Run the container
-      docker_container:
-        name: "{{ container_name }}"
-        #image: "{{ image_name }}:{{ image_tag }}"
-        image: "{{ image_name }}"
-        state: started
-        restart_policy: always
-        ports:
-          - "{{ app_port }}:8080"
+    - name: Apply Kubernetes 
+      k8s:
+        kubeconfig: ~/.kube/config
+        state: present
+        definition: "{{ lookup('file', 'compare-app.yml') }}"
