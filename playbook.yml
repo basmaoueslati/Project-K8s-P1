@@ -7,4 +7,4 @@
       k8s:
         kubeconfig: ~/.kube/config
         state: present
-        definition: "{{ lookup('file', 'compare-app.yml') }}"
+        definition: "{{ lookup('file', 'compare-app.yaml') }}"
