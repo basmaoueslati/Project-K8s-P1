@@ -1,6 +1,6 @@
 ---
 - name: Deploy Docker container to server
-  hosts: dockerC
+  hosts: MasterKube
   become: true
   vars:
     image_name: "basmaoueslati/compare-appf25"
