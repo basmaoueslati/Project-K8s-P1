@@ -10,3 +10,4 @@
         kubeconfig: ~/.kube/config
         state: present
         definition: "{{ lookup('file', 'compare-app.yaml') }}"
+        namespace: default
